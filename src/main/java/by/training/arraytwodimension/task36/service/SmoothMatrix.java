@@ -2,47 +2,48 @@ package by.training.arraytwodimension.task36.service;
 
 public class SmoothMatrix {
 
-    public int[][] smooth (int [][] matrix){
+    public double[][] smooth(int[][] matrix) {
 
         int tmp;
-        int[][] resultMatrix = matrix;
+        double[][] resultMatrix = new double[5][6];
 
-        for(int i = 0; i < matrix.length; i++) {
+        for (int i = 0; i < matrix.length; i++) {
+
+            int count = 0;
+            int sum = 0;
 
             for (int j = 0; j < matrix[i].length; j++) {
 
-                tmp = 0;
+                if ((i + 1) < matrix.length) {
 
-                if (i > 0) {
-                    tmp += matrix[i - 1][j];
-                    if (j > 0) {
-                        tmp += matrix[i - 1][j - 1];
-                    }
-                    if (j < (matrix.length - 1))
-                        tmp += matrix[i - 1][j + 1];
+                    sum += matrix[i + 1][j];
+                    count++;
                 }
 
-                if (i < matrix.length - 1) {
-                    tmp += matrix[i + 1][j];
-                    if (j > 0) {
-                        tmp += matrix[i + 1][j - 1];
-                    }
-                    if (j < matrix[i].length - 1) {
-                        tmp += matrix[i + 1][j + 1];
-                    }
-                }
+                if ((j + 1) < matrix[i].length) {
 
-                if (j > 0) {
-                    tmp += matrix[i][j - 1];
+                    sum += matrix[i][j + 1];
+                    count++;
                 }
-                if (j < matrix[i].length - 1) {
-                    tmp += matrix[i][j + 1];
-                }
+                if ((i - 1) >= 0) {
 
-                resultMatrix[i][j] = tmp;
+                    sum += matrix[i - 1][j];
+                    count++;
+
+                }
+                if ((j - 1) >= 0) {
+
+                    sum += matrix[i][j - 1];
+                    count++;
+                }
+                resultMatrix[i][j] = sum / count;
+                count = 0;
+                sum = 0;
             }
-
         }
+
         return resultMatrix;
     }
+
 }
+
